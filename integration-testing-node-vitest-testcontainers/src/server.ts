@@ -1,14 +1,14 @@
-import express, { type Response } from "express"; // Import Response type
+import express, { type Response, type Request } from "express";
 import { getDB } from "./db";
 
 const app = express();
 app.use(express.json());
 
-app.post("/items", async (req, res): Promise<Response> => {
-	// Use Promise<Response>
+app.post("/items", async (req: Request, res: Response) => {
 	const { name } = req.body;
 	if (!name) {
-		return res.status(400).send({ error: "Name is required" });
+		res.status(400).send({ error: "Name is required" });
+		return;
 	}
 	try {
 		const db = getDB();
@@ -16,26 +16,26 @@ app.post("/items", async (req, res): Promise<Response> => {
 			"INSERT INTO items(name) VALUES($1) RETURNING *",
 			[name],
 		);
-		return res.status(201).send(result.rows[0]); // Added return
+		res.status(201).send(result.rows[0]); 
 	} catch (err) {
 		console.error(err);
-		return res.status(500).send({ error: "Failed to create item" }); // Added return
+		res.status(500).send({ error: "Failed to create item" }); 
 	}
 });
 
-app.get("/items/:id", async (req, res): Promise<Response> => {
-	// Use Promise<Response>
+app.get("/items/:id", async (req: Request, res: Response) => {
 	const { id } = req.params;
 	try {
 		const db = getDB();
 		const result = await db.query("SELECT * FROM items WHERE id = $1", [id]);
 		if (result.rows.length === 0) {
-			return res.status(404).send({ error: "Item not found" });
+			res.status(404).send({ error: "Item not found" });
+			return;
 		}
-		return res.send(result.rows[0]); // Added return
+		res.send(result.rows[0]); 
 	} catch (err) {
 		console.error(err);
-		return res.status(500).send({ error: "Failed to retrieve item" }); // Added return
+		res.status(500).send({ error: "Failed to retrieve item" }); 
 	}
 });
 
@@ -49,5 +49,4 @@ if (require.main === module) {
 	});
 }
 
-// Export app for testing
 export default app;

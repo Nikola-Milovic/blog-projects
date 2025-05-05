@@ -1,0 +1,35 @@
+{
+  "name": "pglite-drizzle",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "tsc && node ./dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@electric-sql/pglite": "^0.3.0",
+    "drizzle-kit": "^0.31.1",
+    "drizzle-orm": "^0.43.1",
+    "express": "^5.1.0",
+    "pg": "^8.14.1"
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "^10.23.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.14",
+    "@types/pg": "^8.11.11",
+    "@types/supertest": "^6.0.3",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.1.0",
+    "testcontainers": "^10.23.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "vitest": "^3.1.1"
+  }
+}
